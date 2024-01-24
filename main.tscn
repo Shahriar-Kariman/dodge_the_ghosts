@@ -8,8 +8,9 @@
 size = Vector2(642, 479)
 
 [sub_resource type="Gradient" id="Gradient_r5usu"]
+interpolation_mode = 2
 offsets = PackedFloat32Array(0, 0.487013, 1)
-colors = PackedColorArray(0, 0, 0, 1, 0.351563, 0.351563, 0.351563, 1, 0, 0, 0, 1)
+colors = PackedColorArray(0.0807833, 0.0807833, 0.0807833, 1, 0.237539, 0.237539, 0.237539, 1, 0.103744, 0.103744, 0.103744, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_3jihr"]
 gradient = SubResource("Gradient_r5usu")
