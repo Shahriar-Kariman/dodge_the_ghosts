@@ -10,9 +10,7 @@ func _ready():
 func _process(delta):
 	pass
 
-func _spawn():
-	pass
-
 func _on_spawn_timer_timeout():
 	var ghost = ghost_template.instantiate()
+	$player.end.connect(ghost._on_end)
 	add_child(ghost)

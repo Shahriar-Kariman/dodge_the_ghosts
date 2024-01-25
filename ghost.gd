@@ -9,6 +9,8 @@ var y = 0
 var x = 0
 var speed = 46
 
+var active = true
+
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	side = randi_range(1,4)
@@ -41,6 +43,19 @@ func _ready():
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	position += velocity*delta*speed
-	position.x = clamp(position.x,0,width)
-	position.y = clamp(position.y,0,height)
+	if active:
+		position += velocity*delta*speed
+		# position.x = clamp(position.x,0,width)
+		# position.y = clamp(position.y,0,height)
+		if position.x > width:
+			position.x = 0
+		elif position.x < 0:
+			position.x = width
+		if position.y > height:
+			position.y = 0
+		elif position.y < 0:
+			position.y = height
+
+func _on_end():
+	active = false
+	$AnimatedSprite2D.stop()

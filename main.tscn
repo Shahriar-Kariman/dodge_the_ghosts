@@ -1,8 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://cpwv0d200fhjo"]
+[gd_scene load_steps=8 format=3 uid="uid://cpwv0d200fhjo"]
 
 [ext_resource type="PackedScene" uid="uid://b1ujhdifu154o" path="res://player.tscn" id="1_4ifh6"]
 [ext_resource type="Script" path="res://main.gd" id="1_wlumd"]
 [ext_resource type="PackedScene" uid="uid://hcdprmwhyx14" path="res://ghost.tscn" id="2_e15ta"]
+[ext_resource type="Script" path="res://control.gd" id="3_phoq0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0l2y1"]
 size = Vector2(642, 479)
@@ -21,9 +22,10 @@ script = ExtResource("1_wlumd")
 ghost_template = ExtResource("2_e15ta")
 
 [node name="background" type="Area2D" parent="."]
+collision_layer = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="background"]
-position = Vector2(321, 240.5)
+position = Vector2(320, 240.5)
 shape = SubResource("RectangleShape2D_0l2y1")
 
 [node name="Sprite2D" type="Sprite2D" parent="background"]
@@ -36,6 +38,53 @@ region_rect = Rect2(0, 0, 640, 480)
 position = Vector2(320.5, 239.625)
 
 [node name="SpawnTimer" type="Timer" parent="."]
+wait_time = 3.0
 autostart = true
 
+[node name="control" type="Control" parent="."]
+z_index = 7
+layout_mode = 3
+anchors_preset = 0
+offset_right = 642.0
+offset_bottom = 483.0
+script = ExtResource("3_phoq0")
+
+[node name="panel" type="Panel" parent="control"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 10.0
+offset_right = 107.0
+offset_bottom = 50.0
+
+[node name="minutes" type="Label" parent="control/panel"]
+layout_mode = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 28.0
+offset_bottom = 34.0
+text = "00:"
+
+[node name="seconds" type="Label" parent="control/panel"]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 8.0
+offset_right = 53.0
+offset_bottom = 34.0
+text = "00."
+
+[node name="miliseconds" type="Label" parent="control/panel"]
+layout_mode = 0
+offset_left = 55.0
+offset_top = 8.0
+offset_right = 83.0
+offset_bottom = 34.0
+text = "000"
+
+[node name="AcceptDialog" type="AcceptDialog" parent="control"]
+initial_position = 2
+size = Vector2i(386, 80)
+ok_button_text = "Retry"
+
+[connection signal="end" from="player" to="control" method="_on_player_end"]
 [connection signal="timeout" from="SpawnTimer" to="." method="_on_spawn_timer_timeout"]
+[connection signal="confirmed" from="control/AcceptDialog" to="control" method="_on_accept_dialog_confirmed"]
